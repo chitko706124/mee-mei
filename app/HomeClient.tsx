@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { CarouselSection } from "@/components/ui/carousel-section";
-import background from "../components/image/BG1.jpg";
-import background2 from "../components/image/BG2.jpg";
+import background from "@/components/image/BG1.jpg";
+import background2 from "@/components/image/BG2.jpg";
 
 import Link from "next/link";
 import MLBB from "@/components/image/MLBB.jpg";
