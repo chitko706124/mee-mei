@@ -42,9 +42,7 @@ export default function SellAccountsPage() {
   useEffect(() => {
     const fetchSellTexts = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/sell-texts`,
-        );
+        const response = await fetch(`${process.env.API_URL}/sell-texts`);
         if (!response.ok) throw new Error("Failed to fetch sell texts");
         const data = await response.json();
 
@@ -197,7 +195,6 @@ export default function SellAccountsPage() {
               </h3>
               <p className="text-muted-foreground mb-6">
                 {t("sell.contact_desc")}
-               
               </p>
               {/* <Button
                 size="lg"

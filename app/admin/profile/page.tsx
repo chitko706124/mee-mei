@@ -114,7 +114,7 @@ export default function AdminProfilePage() {
   //       return;
   //     }
 
-  //     const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/update-password", {
+  //     const response = await fetch(process.env.API_URL + "/update-password", {
   //       method: "POST",
   //       headers: { "Content-Type": "application/json" , Authorization: `Bearer ${localStorage.getItem("auth_token")}`},
   //       body: JSON.stringify({
@@ -171,21 +171,18 @@ export default function AdminProfilePage() {
       }
 
       // Use the correct field names that backend expects
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/update-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          },
-          body: JSON.stringify({
-            current_password: formData.currentPassword, // Changed to current_password
-            new_password: formData.newPassword, // Changed to new_password
-            new_password_confirmation: formData.confirmPassword, // Added confirmation field
-          }),
+      const response = await fetch(process.env.API_URL + "/update-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
         },
-      );
+        body: JSON.stringify({
+          current_password: formData.currentPassword, // Changed to current_password
+          new_password: formData.newPassword, // Changed to new_password
+          new_password_confirmation: formData.confirmPassword, // Added confirmation field
+        }),
+      });
 
       const data = await response.json();
 

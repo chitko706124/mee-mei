@@ -54,9 +54,9 @@ function SearchResultsContent() {
       setError(null);
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/accounts?q=${encodeURIComponent(
-          query
-        )}&includeSold=false`
+        `${process.env.API_URL}/accounts?q=${encodeURIComponent(
+          query,
+        )}&includeSold=false`,
       );
       if (!response.ok) throw new Error("Search failed");
       const payload = await response.json();
@@ -158,7 +158,7 @@ function SearchResultsContent() {
             {results.map((account) => {
               const finalPrice = calculateFinalPrice(
                 account.price,
-                account.discount
+                account.discount,
               );
 
               return (

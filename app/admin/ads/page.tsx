@@ -24,7 +24,7 @@ export default function AdminAdsPage() {
   const [uploading, setUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+  const API_URL = process.env.API_URL || "http://127.0.0.1:8000";
 
   const fetchData = useCallback(async () => {
     try {

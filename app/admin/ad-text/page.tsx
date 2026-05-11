@@ -21,7 +21,7 @@ export default function AdminAdTextsPage() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+  const API_URL = process.env.API_URL || "http://127.0.0.1:8000";
 
   // Fetch all ad texts
   const fetchData = useCallback(async () => {

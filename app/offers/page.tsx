@@ -34,9 +34,7 @@ function OfferDetailPage() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/accounts/${id}`,
-      );
+      const response = await fetch(`${process.env.API_URL}/accounts/${id}`);
       // console.log([response])
       if (response.status === 404) {
         setError("Account not found");
