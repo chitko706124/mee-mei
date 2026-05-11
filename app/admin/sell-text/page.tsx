@@ -21,7 +21,7 @@ export default function AdminSellTextsPage() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-  const API_URL = process.env.API_URL || "http://127.0.0.1:8000";
+  const URL = process.env.URL || "http://127.0.0.1:8000";
 
   // Fetch all sell texts
   const fetchData = useCallback(async () => {
@@ -29,7 +29,7 @@ export default function AdminSellTextsPage() {
       setLoading(true);
       const token = localStorage.getItem("auth_token");
 
-      const response = await fetch(`${API_URL}/sell-texts`, {
+      const response = await fetch(`${URL}/sell-texts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ export default function AdminSellTextsPage() {
     } finally {
       setLoading(false);
     }
-  }, [API_URL]);
+  }, [URL]);
 
   // Check auth and fetch data on mount
   useEffect(() => {
@@ -86,10 +86,10 @@ export default function AdminSellTextsPage() {
       let url, method;
 
       if (isEditing && sellTextForm.id) {
-        url = `${API_URL}/sell-texts/${sellTextForm.id}`;
+        url = `${URL}/sell-texts/${sellTextForm.id}`;
         method = "PUT";
       } else {
-        url = `${API_URL}/sell-texts`;
+        url = `${URL}/sell-texts`;
         method = "POST";
       }
 
@@ -141,7 +141,7 @@ export default function AdminSellTextsPage() {
         return;
       }
 
-      const response = await fetch(`${API_URL}/sell-texts/${id}`, {
+      const response = await fetch(`${URL}/sell-texts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

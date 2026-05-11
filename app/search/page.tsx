@@ -54,7 +54,7 @@ function SearchResultsContent() {
       setError(null);
 
       const response = await fetch(
-        `${process.env.API_URL}/accounts?q=${encodeURIComponent(
+        `${process.env.URL}/accounts?q=${encodeURIComponent(
           query,
         )}&includeSold=false`,
       );

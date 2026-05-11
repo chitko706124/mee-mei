@@ -23,14 +23,14 @@ export default function HomePage() {
         await Promise.all([
           // fetch( `http://localhost:8000/api/ads`),
           // fetch(`http://localhost:8000/api/accounts`),
-          fetch(`${process.env.API_URL}/ads`),
+          fetch(`${process.env.URL}/ads`),
           fetch(
-            `${process.env.API_URL}/accounts?category=mobile_legend&limit=10&order=created_at.desc`,
+            `${process.env.URL}/accounts?category=mobile_legend&limit=10&order=created_at.desc`,
           ),
           fetch(
-            `${process.env.API_URL}/accounts?category=pubg&limit=10&order=created_at.desc`,
+            `${process.env.URL}/accounts?category=pubg&limit=10&order=created_at.desc`,
           ),
-          fetch(`${process.env.API_URL}/ad-texts`),
+          fetch(`${process.env.URL}/ad-texts`),
         ]);
 
       if (

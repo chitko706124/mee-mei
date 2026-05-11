@@ -66,7 +66,7 @@ export function Navbar() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(`${process.env.API_URL}/check-auth`, {
+        const response = await fetch(`${process.env.URL}/check-auth`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
@@ -91,7 +91,7 @@ export function Navbar() {
   const handleSignOut = async () => {
     try {
       const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${process.env.API_URL}/logout`, {
+      const response = await fetch(`${process.env.URL}/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -117,7 +117,7 @@ export function Navbar() {
     setIsSearching(true);
     try {
       const response = await fetch(
-        `${process.env.API_URL}/accounts?q=${encodeURIComponent(
+        `${process.env.URL}/accounts?q=${encodeURIComponent(
           query,
         )}&limit=8&includeSold=false`,
       );

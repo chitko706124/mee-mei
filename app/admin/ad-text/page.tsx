@@ -21,7 +21,7 @@ export default function AdminAdTextsPage() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-  const API_URL = process.env.API_URL || "http://127.0.0.1:8000";
+  const URL = process.env.URL || "http://127.0.0.1:8000";
 
   // Fetch all ad texts
   const fetchData = useCallback(async () => {
@@ -29,7 +29,7 @@ export default function AdminAdTextsPage() {
       setLoading(true);
       const token = localStorage.getItem("auth_token");
 
-      const response = await fetch(`${API_URL}/ad-texts`, {
+      const response = await fetch(`${URL}/ad-texts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ export default function AdminAdTextsPage() {
     } finally {
       setLoading(false);
     }
-  }, [API_URL]);
+  }, [URL]);
 
   // Check auth and fetch data on mount
   useEffect(() => {
@@ -86,10 +86,10 @@ export default function AdminAdTextsPage() {
       let url, method;
 
       if (isEditing && adTextForm.id) {
-        url = `${API_URL}/ad-texts/${adTextForm.id}`;
+        url = `${URL}/ad-texts/${adTextForm.id}`;
         method = "PUT";
       } else {
-        url = `${API_URL}/ad-texts`;
+        url = `${URL}/ad-texts`;
         method = "POST";
       }
 
@@ -141,7 +141,7 @@ export default function AdminAdTextsPage() {
         return;
       }
 
-      const response = await fetch(`${API_URL}/ad-texts/${id}`, {
+      const response = await fetch(`${URL}/ad-texts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
