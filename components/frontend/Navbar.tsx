@@ -65,12 +65,15 @@ export function Navbar() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(`${process.env.BACKEND_URL}/check-auth`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        const response = await fetch(
+          `https://api.meemei-shop.com/api/check-auth`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+            },
           },
-        });
+        );
 
         const authData = await response.json();
 
@@ -90,7 +93,7 @@ export function Navbar() {
   const handleSignOut = async () => {
     try {
       const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${process.env.BACKEND_URL}/logout`, {
+      const response = await fetch(`https://api.meemei-shop.com/api/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -116,7 +119,7 @@ export function Navbar() {
     setIsSearching(true);
     try {
       const response = await fetch(
-        `${process.env.BACKEND_URL}/accounts?q=${encodeURIComponent(
+        `https://api.meemei-shop.com/api/accounts?q=${encodeURIComponent(
           query,
         )}&limit=8&includeSold=false`,
       );

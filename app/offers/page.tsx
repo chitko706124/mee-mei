@@ -34,7 +34,9 @@ function OfferDetailPage() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`${process.env.BACKEND_URL}/accounts/${id}`);
+      const response = await fetch(
+        `https://api.meemei-shop.com/api/accounts/${id}`,
+      );
       // console.log([response])
       if (response.status === 404) {
         setError("Account not found");

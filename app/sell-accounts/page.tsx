@@ -42,7 +42,9 @@ export default function SellAccountsPage() {
   useEffect(() => {
     const fetchSellTexts = async () => {
       try {
-        const response = await fetch(`${process.env.BACKEND_URL}/sell-texts`);
+        const response = await fetch(
+          `https://api.meemei-shop.com/api/sell-texts`,
+        );
         if (!response.ok) throw new Error("Failed to fetch sell texts");
         const data = await response.json();
 
