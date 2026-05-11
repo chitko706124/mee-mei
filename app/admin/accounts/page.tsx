@@ -118,8 +118,7 @@ export default function AdminAccountsPage() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-  const BACKEND_URL =
-    process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+  const BACKEND_URL = "https://api.meemei-shop.com/api";
 
   // Check auth and fetch constants
   useEffect(() => {
