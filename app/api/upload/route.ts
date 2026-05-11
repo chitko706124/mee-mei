@@ -1,8 +1,9 @@
+export const runtime = "nodejs";
+
 import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
-const MAX_CONCURRENT_UPLOADS = 3; // Limit concurrent uploads
 
 const s3Client = new S3Client({
   region: process.env.DO_SPACES_REGION || "sgp1",
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { error: `File too large (max ${MAX_FILE_SIZE / 1024 / 1024}MB)` },
+        { error: "File too large (max 20MB)" },
         { status: 400 },
       );
     }
@@ -60,7 +61,10 @@ export async function POST(request: NextRequest) {
     const bucket = process.env.DO_SPACES_BUCKET!;
     const publicUrl = `https://${bucket}.${new URL(endpoint).host}/${objectKey}`;
 
-    return NextResponse.json({ url: publicUrl });
+    // Return only the URL as a string
+    return NextResponse.json({
+      url: publicUrl,
+    });
   } catch (error: any) {
     console.error("Upload error:", error);
     return NextResponse.json(

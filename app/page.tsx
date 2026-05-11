@@ -23,14 +23,14 @@ export default function HomePage() {
         await Promise.all([
           // fetch( `http://localhost:8000/api/ads`),
           // fetch(`http://localhost:8000/api/accounts`),
-          fetch(`https://api.meemei-shop.com/api/ads`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/ads`),
           fetch(
-            `https://api.meemei-shop.com/api/accounts?category=mobile_legend&limit=10&order=created_at.desc`,
+            `${process.env.NEXT_PUBLIC_API_URL}/accounts?category=mobile_legend&limit=10&order=created_at.desc`,
           ),
           fetch(
-            `https://api.meemei-shop.com/api/accounts?category=pubg&limit=10&order=created_at.desc`,
+            `${process.env.NEXT_PUBLIC_API_URL}/accounts?category=pubg&limit=10&order=created_at.desc`,
           ),
-          fetch(`https://api.meemei-shop.com/api/ad-texts`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/ad-texts`),
         ]);
 
       if (

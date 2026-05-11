@@ -66,7 +66,7 @@ export function Navbar() {
     const checkAuth = async () => {
       try {
         const response = await fetch(
-          `https://api.meemei-shop.com/api/check-auth`,
+          `${process.env.NEXT_PUBLIC_API_URL}/check-auth`,
           {
             method: "GET",
             headers: {
@@ -93,12 +93,15 @@ export function Navbar() {
   const handleSignOut = async () => {
     try {
       const token = localStorage.getItem("auth_token");
-      const response = await fetch(`https://api.meemei-shop.com/api/logout`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/logout`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       if (!response.ok) throw new Error("Failed to sign out");
 
       localStorage.removeItem("auth_token");
@@ -119,7 +122,7 @@ export function Navbar() {
     setIsSearching(true);
     try {
       const response = await fetch(
-        `https://api.meemei-shop.com/api/accounts?q=${encodeURIComponent(
+        `${process.env.NEXT_PUBLIC_API_URL}/accounts?q=${encodeURIComponent(
           query,
         )}&limit=8&includeSold=false`,
       );

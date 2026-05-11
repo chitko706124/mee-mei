@@ -54,7 +54,7 @@ function SearchResultsContent() {
       setError(null);
 
       const response = await fetch(
-        `https://api.meemei-shop.com/api/accounts?q=${encodeURIComponent(
+        `${process.env.NEXT_PUBLIC_API_URL}/accounts?q=${encodeURIComponent(
           query,
         )}&includeSold=false`,
       );

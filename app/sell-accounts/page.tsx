@@ -43,7 +43,7 @@ export default function SellAccountsPage() {
     const fetchSellTexts = async () => {
       try {
         const response = await fetch(
-          `https://api.meemei-shop.com/api/sell-texts`,
+          `${process.env.NEXT_PUBLIC_API_URL}/sell-texts`,
         );
         if (!response.ok) throw new Error("Failed to fetch sell texts");
         const data = await response.json();

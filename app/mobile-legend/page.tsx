@@ -24,7 +24,7 @@ export default function MobileLegendPage() {
       setLoading(true);
       try {
         const response = await fetch(
-          `https://api.meemei-shop.com/api/accounts?category=mobile_legend&page=${pageNumber}&pageSize=${pageSize}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/accounts?category=mobile_legend&page=${pageNumber}&pageSize=${pageSize}`,
         );
         if (!response.ok) throw new Error("Failed to fetch accounts");
         const payload = await response.json();

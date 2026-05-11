@@ -35,7 +35,7 @@ function OfferDetailPage() {
       setError(null);
 
       const response = await fetch(
-        `https://api.meemei-shop.com/api/accounts/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/accounts/${id}`,
       );
       // console.log([response])
       if (response.status === 404) {

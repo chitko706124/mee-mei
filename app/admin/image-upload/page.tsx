@@ -29,11 +29,11 @@ export default function AdminImageUploadPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem("auth_token")) {
-  //     router.replace("/admin/login");
-  //   }
-  // }, [router]);
+  useEffect(() => {
+    if (!localStorage.getItem("auth_token")) {
+      router.replace("/admin/login");
+    }
+  }, [router]);
 
   useEffect(() => {
     return () => {

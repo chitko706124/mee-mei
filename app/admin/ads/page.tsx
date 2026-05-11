@@ -24,11 +24,11 @@ export default function AdminAdsPage() {
   const [uploading, setUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const BACKEND_URL = process.env.BACKEND_URL || "http://127.0.0.1:8000";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/ads`, {
+      const response = await fetch(`${API_URL}/ads`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
         },
@@ -47,7 +47,7 @@ export default function AdminAdsPage() {
       // console.error("Error fetching ads", err);
       toast.error(err.message || "Error fetching ads");
     }
-  }, [BACKEND_URL]);
+  }, [API_URL]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -111,12 +111,12 @@ export default function AdminAdsPage() {
         formData.append("image", selectedFile);
       }
 
-      let url = `${BACKEND_URL}/ads`;
+      let url = `${API_URL}/ads`;
       let method = "POST";
 
       if (adForm.id) {
         // Update existing ad
-        url = `${BACKEND_URL}/ads/${adForm.id}`;
+        url = `${API_URL}/ads/${adForm.id}`;
         method = "PUT";
 
         // For updates, we need to send _method=PUT if using Laravel's method spoofing
@@ -186,7 +186,7 @@ export default function AdminAdsPage() {
         return;
       }
 
-      const response = await fetch(`${BACKEND_URL}/ads/${id}`, {
+      const response = await fetch(`${API_URL}/ads/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

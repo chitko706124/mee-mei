@@ -27,7 +27,7 @@ export default function AdminLoginPage() {
     try {
       // console.log("Attempting login with:", { email });
 
-      const response = await fetch(process.env.BACKEND_URL + "/login", {
+      const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

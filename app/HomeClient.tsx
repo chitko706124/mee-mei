@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { CarouselSection } from "@/components/ui/carousel-section";
-import bg1 from "@/components/frontend/BG1.jpg";
-import bg2 from "@/components/frontend/BG2.jpg";
+import background from "../components/image/BG1.jpg";
+import background2 from "../components/image/BG2.jpg";
 
 import Link from "next/link";
 import MLBB from "@/components/image/MLBB.jpg";
@@ -125,7 +125,7 @@ export default function HomeClient({ ads, mlAccounts, pubgAccounts }: any) {
         {/* Background Image with Parallax Effect */}
         <div className="absolute inset-0 z-0">
           <Image
-            src={theme === "dark" ? bg1 : bg2}
+            src={theme === "dark" ? background : background2}
             alt="Hero Background"
             fill
             className="object-cover scale-105 transition-transform duration-700 group-hover:scale-100"
