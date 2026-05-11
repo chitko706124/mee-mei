@@ -118,7 +118,8 @@ export default function AdminAccountsPage() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-  const URL = process.env.URL || "http://127.0.0.1:8000";
+  const BACKEND_URL =
+    process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
 
   // Check auth and fetch constants
   useEffect(() => {
@@ -130,7 +131,7 @@ export default function AdminAccountsPage() {
       }
 
       try {
-        const response = await fetch(`${URL}/constants`, {
+        const response = await fetch(`${BACKEND_URL}/constants`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -175,7 +176,7 @@ export default function AdminAccountsPage() {
     };
 
     initialize();
-  }, [router, URL]);
+  }, [router, BACKEND_URL]);
 
   // const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
@@ -184,7 +185,7 @@ export default function AdminAccountsPage() {
       try {
         setLoading(true);
         const token = localStorage.getItem("auth_token");
-        const url = new URL(`${URL}/accounts`);
+        const url = new URL(`${BACKEND_URL}/accounts`);
         url.searchParams.append("page", page.toString());
         url.searchParams.append("pageSize", pagination.pageSize.toString());
         if (category && category !== "all") {
@@ -219,7 +220,7 @@ export default function AdminAccountsPage() {
         setLoading(false);
       }
     },
-    [URL, pagination.pageSize],
+    [BACKEND_URL, pagination.pageSize],
   );
 
   // const handleCategoryChange = (value: string) => {
@@ -306,7 +307,7 @@ export default function AdminAccountsPage() {
     const formData = new FormData();
     formData.append("image", file);
 
-    const res = await fetch(`${URL}/accounts/upload-image`, {
+    const res = await fetch(`${BACKEND_URL}/accounts/upload-image`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
@@ -397,7 +398,7 @@ export default function AdminAccountsPage() {
       let response;
 
       if (isEditing && accountForm.id) {
-        response = await fetch(`${URL}/accounts/${accountForm.id}`, {
+        response = await fetch(`${BACKEND_URL}/accounts/${accountForm.id}`, {
           method: "POST", // Use POST with _method PUT for Laravel
           headers: {
             Authorization: `Bearer ${token}`,
@@ -405,7 +406,7 @@ export default function AdminAccountsPage() {
           body: formData,
         });
       } else {
-        response = await fetch(`${URL}/accounts`, {
+        response = await fetch(`${BACKEND_URL}/accounts`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -464,13 +465,16 @@ export default function AdminAccountsPage() {
 
     try {
       const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${URL}/accounts/${id}/mark-for-deletion`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${BACKEND_URL}/accounts/${id}/mark-for-deletion`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       const data = await response.json();
 
@@ -488,7 +492,7 @@ export default function AdminAccountsPage() {
   const restoreAccount = async (id: string) => {
     try {
       const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${URL}/accounts/${id}/restore`, {
+      const response = await fetch(`${BACKEND_URL}/accounts/${id}/restore`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -520,7 +524,7 @@ export default function AdminAccountsPage() {
 
     try {
       const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${URL}/accounts/${id}`, {
+      const response = await fetch(`${BACKEND_URL}/accounts/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -543,7 +547,7 @@ export default function AdminAccountsPage() {
   const cleanupExpiredAccounts = async () => {
     try {
       const token = localStorage.getItem("auth_token");
-      const response = await fetch(`${URL}/accounts/cleanup-expired`, {
+      const response = await fetch(`${BACKEND_URL}/accounts/cleanup-expired`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

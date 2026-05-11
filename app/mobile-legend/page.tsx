@@ -24,7 +24,7 @@ export default function MobileLegendPage() {
       setLoading(true);
       try {
         const response = await fetch(
-          `${process.env.URL}/accounts?category=mobile_legend&page=${pageNumber}&pageSize=${pageSize}`,
+          `${process.env.BACKEND_URL}/accounts?category=mobile_legend&page=${pageNumber}&pageSize=${pageSize}`,
         );
         if (!response.ok) throw new Error("Failed to fetch accounts");
         const payload = await response.json();
