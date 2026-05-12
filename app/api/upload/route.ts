@@ -17,8 +17,8 @@ const s3Client = new S3Client({
 const buildUploadKey = (originalName: string) => {
   const timestamp = Date.now();
   const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const date = new Date().toISOString().slice(0, 10);
-  return `uploads/${date}/${timestamp}-${safeName}`;
+  // const date = new Date().toISOString().slice(0, 10);
+  return `mee-mei/${timestamp}-${safeName}`;
 };
 
 export async function POST(request: NextRequest) {

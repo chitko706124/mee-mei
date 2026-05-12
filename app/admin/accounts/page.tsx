@@ -302,25 +302,113 @@ export default function AdminAccountsPage() {
     });
   };
 
-  const uploadSingleImage = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("image", file);
+  // const uploadSingleImage = async (file: File): Promise<string> => {
+  //   const formData = new FormData();
+  //   formData.append("image", file);
 
-    const res = await fetch(`${API_URL}/accounts/upload-image`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-      },
-      body: formData,
+  //   const res = await fetch(`${API_URL}/accounts/upload-image`, {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+  //     },
+  //     body: formData,
+  //   });
+
+  //   const data = await res.json();
+
+  //   if (!res.ok) {
+  //     throw new Error(data.message || "Upload failed");
+  //   }
+
+  //   return data.url;
+  // };
+
+  // const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = e.target.files;
+  //   if (!files) return;
+
+  //   setCompressingImages(true);
+  //   setUploading(true);
+
+  //   try {
+  //     const uploadedUrls: string[] = [];
+
+  //     for (const file of Array.from(files)) {
+  //       const compressed = await compressImage(file);
+  //       const url = await uploadSingleImage(compressed);
+  //       uploadedUrls.push(url);
+  //     }
+
+  //     setAccountForm((prev) => ({
+  //       ...prev,
+  //       images: [...prev.images, ...uploadedUrls],
+  //     }));
+
+  //     toast.success(`${uploadedUrls.length} images uploaded`);
+  //   } catch (err: any) {
+  //     toast.error(err.message || "Upload failed");
+  //   } finally {
+  //     setCompressingImages(false);
+  //     setUploading(false);
+  //     e.target.value = "";
+  //   }
+  // };
+
+  const uploadSingleImage = async (
+    file: File,
+    onProgress?: (percent: number) => void,
+  ): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("file", file); // Note: using "file" instead of "image" to match your Next.js API
+
+      const xhr = new XMLHttpRequest();
+
+      // Track upload progress if callback provided
+      if (onProgress) {
+        xhr.upload.addEventListener("progress", (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded * 100) / event.total);
+            onProgress(percent);
+          }
+        });
+      }
+
+      xhr.addEventListener("load", () => {
+        if (xhr.status === 200) {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            // Assuming your Next.js API returns { url: string } or similar
+            resolve(response.url || response.fileUrl || response.path);
+          } catch (e) {
+            reject(new Error("Invalid response from server"));
+          }
+        } else {
+          try {
+            const error = JSON.parse(xhr.responseText);
+            reject(
+              new Error(
+                error.message || `Upload failed with status ${xhr.status}`,
+              ),
+            );
+          } catch (e) {
+            reject(new Error(`Upload failed with status ${xhr.status}`));
+          }
+        }
+      });
+
+      xhr.addEventListener("error", () => {
+        reject(new Error("Network error - please check your connection"));
+      });
+
+      xhr.addEventListener("timeout", () => {
+        reject(new Error("Upload timeout - please try again"));
+      });
+
+      xhr.open("POST", "/api/upload"); // Call Next.js API route
+      // Don't set Content-Type header - let browser set it with boundary for FormData
+      xhr.send(formData);
     });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.message || "Upload failed");
-    }
-
-    return data.url;
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -344,7 +432,7 @@ export default function AdminAccountsPage() {
         images: [...prev.images, ...uploadedUrls],
       }));
 
-      toast.success(`${uploadedUrls.length} images uploaded`);
+      toast.success(`${uploadedUrls.length} images uploaded successfully`);
     } catch (err: any) {
       toast.error(err.message || "Upload failed");
     } finally {
@@ -353,7 +441,6 @@ export default function AdminAccountsPage() {
       e.target.value = "";
     }
   };
-
   const handleAccountSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
